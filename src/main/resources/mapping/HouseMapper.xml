@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louyy.swj.persistence.HouseMapper">
+
+    <select id="getHouseInfo" resultType="com.louyy.swj.domain.House">
+        select * from info;
+    </select>
+
+    <select id="getHouseInfoListGroupByRegion" resultType="com.louyy.swj.domain.RegionCount">
+        SELECT LEFT
+	( address, 2 ) AS region,
+	count( address ) AS count,
+	avg( totalPrice ) AS totalPrice,
+	avg( unitPrice ) AS unitPrice,
+	MAX( unitPrice ) AS maxUnitPrice,
+	MIN( unitPrice ) AS minUnitPrice,
+	MAX( totalPrice ) AS maxTotalPrice,
+	MIN( totalPrice ) AS minTotalPrice
+FROM
+	info
+GROUP BY
+	LEFT ( address, 2 );
+    </select>
+
+    <select id="getHouseInfoListGroupByYear" resultType="com.louyy.swj.domain.YearCount">
+        select buildYear as year,count(buildYear) as count from info GROUP BY `buildYear`;
+    </select>
+
+</mapper>
